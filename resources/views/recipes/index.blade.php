@@ -4,28 +4,37 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            {{dd($recipes)}}
             <table class="table">
                 <thead>
-                    <th class="">#</th>
-                    <th class="col h5">Title</th>
-                    <th class="col h5">Calories</th>
-                    <th class="col h5">Fat</th>
-                    <th class="col h5">Carbs</th>
-                    <th class="col h5">Protein</th>
-                </thead>
-                @foreach ($recipes as $recipe)
-                <tbody>
                     <tr>
-                        <th>{{$recipe->id}}</th>
-                        <td><a href="">{{$recipe->title}}</a></td>
+                        <th scope="col"></th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Calories</th>
+                        <th scope="col">Fat</th>
+                        <th scope="col">Carbs</th>
+                        <th scope="col">Protein</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($recipes as $recipe)
+                    <tr>
+                        <th scope="row">{{$recipe->id}}</th>
+                        <td><a href="{{ url("/recipes/" . $recipe->id) }}">{{$recipe->title}}</a></td>
                         <td class="text-right">{{$recipe->calories}}</td>
                         <td class="text-right">{{$recipe->fat}}</td>
                         <td class="text-right">{{$recipe->carbohydrate}}</td>
                         <td class="text-right">{{$recipe->protein}}</td>
                     </tr>
+                    @endforeach
                 </tbody>
-                @endforeach
+                <tfoot>
+                    <th></th>
+                    <th></th>
+                    <th class="text-right">{{ $recipes->sum('calories') }}</th>
+                    <th class="text-right">{{ $recipes->sum('fat') }}</th>
+                    <th class="text-right">{{ $recipes->sum('carbohydrate') }}</th>
+                    <th class="text-right">{{ $recipes->sum('protein') }}</th>
+                </tfoot>
             </table>
         </div>
     </div>

@@ -16,7 +16,7 @@ class RecipeController extends Controller
     {
         $recipes = Recipe::all();
 
-        return view('recipes.index', ['recipes', $recipes]);
+        return view('recipes.index', compact('recipes'));
     }
 
     /**
@@ -39,11 +39,11 @@ class RecipeController extends Controller
     {
         $recipe = new Recipe();
 
-        $recipe->title = $request['title'];
-        $recipe->calories = $request['calories'];
-        $recipe->fat = $request['fat'];
-        $recipe->carbohydrate = $request['carbohydrate'];
-        $recipe->protein = $request['protein'];
+        $recipe->title = request('title');
+        $recipe->calories = request('calories');
+        $recipe->fat = request('fat');
+        $recipe->carbohydrate = request('carbohydrate');
+        $recipe->protein = request('protein');
         $recipe->save();
 
         return redirect('/recipes');
@@ -57,8 +57,7 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        $recipe = Recipe::FindOrFail($recipe);
-        return view('recipes.show', compact($recipe));
+        return view('recipes.edit', compact('recipe'));
     }
 
     /**
@@ -69,8 +68,7 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        $recipe = Recipe::Find($recipe);
-        return view('recipes.edit', compact( $recipe ));
+        return view('recipes.edit', compact('recipe'));
     }
 
     /**
@@ -82,7 +80,19 @@ class RecipeController extends Controller
      */
     public function update(Request $request, Recipe $recipe)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $recipe->title = request('title');
+        $recipe->calories = request('calories');
+        $recipe->fat = request('fat');
+        $recipe->carbohydrate = request('carbohydrate');
+        $recipe->protein = request('protein');
+        $recipe->save();
+
+        return redirect('/recipes');
+
     }
 
     /**
@@ -93,6 +103,8 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        //
+        $recipe->delete();
+        return redirect('/recipes');
+
     }
 }
