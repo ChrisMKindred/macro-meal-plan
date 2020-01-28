@@ -14,7 +14,9 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        //
+        $recipes = Recipe::all();
+
+        return view('recipes.index', ['recipes', $recipes]);
     }
 
     /**
@@ -24,7 +26,7 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        //
+        return view('recipes.create');
     }
 
     /**
@@ -35,7 +37,16 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $recipe = new Recipe();
+
+        $recipe->title = $request['title'];
+        $recipe->calories = $request['calories'];
+        $recipe->fat = $request['fat'];
+        $recipe->carbohydrate = $request['carbohydrate'];
+        $recipe->protein = $request['protein'];
+        $recipe->save();
+
+        return redirect('/recipes');
     }
 
     /**
@@ -46,7 +57,8 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        $recipe = Recipe::FindOrFail($recipe);
+        return view('recipes.show', compact($recipe));
     }
 
     /**
@@ -57,7 +69,8 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        //
+        $recipe = Recipe::Find($recipe);
+        return view('recipes.edit', compact( $recipe ));
     }
 
     /**
