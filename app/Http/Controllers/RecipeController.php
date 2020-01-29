@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Recipe;
+use App\Http\Requests\StoreRecipe;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller
@@ -35,7 +36,7 @@ class RecipeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRecipe $request)
     {
         $recipe = new Recipe();
 
@@ -78,17 +79,15 @@ class RecipeController extends Controller
      * @param  \App\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recipe $recipe)
+    public function update( StoreRecipe $request, Recipe $recipe)
     {
-        $request->validate([
-            'title' => 'required',
-        ]);
 
         $recipe->title = request('title');
         $recipe->calories = request('calories');
         $recipe->fat = request('fat');
         $recipe->carbohydrate = request('carbohydrate');
         $recipe->protein = request('protein');
+        $recipe->sugar = request('sugar');
         $recipe->save();
 
         return redirect('/recipes');
