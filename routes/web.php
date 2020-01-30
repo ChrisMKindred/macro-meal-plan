@@ -20,3 +20,8 @@ Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
 Route::resource('/recipes', 'RecipeController');
+
+Route::get('/calendar', function(){
+        return view('calendar');
+    }
+);
