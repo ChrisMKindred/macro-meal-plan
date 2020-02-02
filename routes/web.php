@@ -19,9 +19,10 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::resource('/recipes', 'RecipeController');
+Route::resource('/recipes', 'RecipeController')->middleware('auth');
 
-Route::get('/calendar', function(){
-        return view('calendar');
-    }
-);
+Route::get('/calendar', function () {
+    return view('calendar');
+})->middleware('auth');
+
+Route::post('/fatsecret', 'FatSecretController@getFood');
