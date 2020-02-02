@@ -80,4 +80,6 @@
             <small id="proteinHelp" class="form-text text-danger">{{ $message }}</small>
         @enderror
 </div>
+
 <button type="submit" class="btn btn-primary">Submit</button>
+<a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>

@@ -4,22 +4,20 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <table class="table">
+            <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th scope="col"></th>
                         <th scope="col">Item</th>
-                        <th scope="col">Calories</th>
-                        <th scope="col">Fat</th>
-                        <th scope="col">Carbs</th>
-                        <th scope="col">Protein</th>
+                        <th scope="col" class="text-right">Calories</th>
+                        <th scope="col" class="text-right">Fat</th>
+                        <th scope="col" class="text-right">Carbs</th>
+                        <th scope="col" class="text-right">Protein</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($recipes as $recipe)
                     <tr>
-                        <th scope="row">{{$recipe->id}}</th>
-                        <td><a href="{{ url("/recipes/" . $recipe->id) }}">{{$recipe->title}}</a></td>
+                        <th scope="row"><a href="{{ url("/recipes/" . $recipe->id) }}">{{$recipe->title}}</a></th>
                         <td class="text-right">{{$recipe->calories}}</td>
                         <td class="text-right">{{$recipe->fat}}</td>
                         <td class="text-right">{{$recipe->carbohydrate}}</td>
@@ -28,8 +26,7 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <th></th>
-                    <th></th>
+                    <th>{{ $recipes->count('title') }}</th>
                     <th class="text-right">{{ $recipes->sum('calories') }}</th>
                     <th class="text-right">{{ $recipes->sum('fat') }}</th>
                     <th class="text-right">{{ $recipes->sum('carbohydrate') }}</th>
