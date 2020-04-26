@@ -56,9 +56,12 @@
         <div class="list-group" id="list">
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <div class="modal-footer justify-content-center flex-column">
+            <nav aria-label="Page navigation example">
+                <ul id="pagination" class="pagination justify-content-center">
+                </ul>
+            </nav>
+            <div id="total"></div>
       </div>
     </div>
   </div>
@@ -90,6 +93,26 @@ function runSearch(e){
                 `;
             }).join('');
             $('#list').html( html );
+            $("#total").html( `<small>Total Results: ${data.foods.total_results}</small>` );
+            var i = 1;
+            var pagination = '';
+            var previous = data.foods.page_number - 1;
+            var next = data.foods.page_number + 1;
+            var pages = ( data.foods.total_results / data.foods.max_results ) + 1;
+            if ( previous >= 0 ) {
+                pagination += `<li class="page-item"><a class="page-link" href="#" data-page="${previous}" tabindex="-1">Previous</a></li>`
+            }
+            while ( i < pages ) {
+                var datapage = i - 1;
+                console.log( datapage )
+                var active = ( data.foods.page_number == datapage ) ? ' active' : '';
+                pagination += `<li class="page-item ${active}"><a class="page-link" data-page="${datapage}" href="#">${i}</a></li>`;
+                i++;
+            }
+            if ( next < pages ) {
+                pagination += `<li class="page-item"><a class="page-link" href="#" data-page="${next}" tabindex="-1">Next</a></li>`;
+            }
+            $("#pagination").html( pagination );
             $('.modal-title').html( 'Results For ' + $('#value').val()  );
            $('.modal').modal('toggle');
         } else {

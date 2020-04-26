@@ -17,7 +17,7 @@ class FatSecretController extends Controller
         $this->client_secret = env('FATSECRET_CLIENT_SECRET');
     }
 
-    public function getFood( Request $request)
+    public function getFood(Request $request)
     {
         switch (request('type')) {
             case 'food_id':
@@ -50,12 +50,11 @@ class FatSecretController extends Controller
             return "No item found for barcode: $barcode";
         }
         return $this->getFoodByID($return->food_id->value);
-
     }
 
     public function getFoodSearch($querysting = 'rxbar chocolate')
     {
-        $post = "method=foods.search&format=json&max_results=20&search_expression=$querysting";
+        $post = "method=foods.search&format=json&max_results=25&search_expression=$querysting";
         return $this->makeCall($post);
     }
 
